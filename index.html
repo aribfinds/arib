@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AribFinds | Explorer</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Poppins:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --navy: #0a192f;
+            --deep-blue: #112240;
+            --gold: #c5a059;
+            --white: #e6f1ff;
+            --slate: #8892b0;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
+        body {
+            background-color: var(--navy);
+            font-family: 'Poppins', sans-serif;
+            color: var(--white);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 40px 20px;
+            overflow-x: hidden;
+        }
+
+        /* Profile Section */
+        .profile-container { text-align: center; margin-bottom: 30px; }
+        .pfp {
+            width: 110px; height: 110px;
+            border-radius: 50%;
+            border: 3px solid var(--gold);
+            object-fit: cover;
+            margin-bottom: 15px;
+        }
+        h1 { font-family: 'Playfair Display', serif; font-size: 24px; letter-spacing: 1px; }
+        .bio { font-size: 13px; color: var(--slate); margin: 12px 0; line-height: 1.5; max-width: 300px; }
+
+        /* Social Links */
+        .links-container { width: 100%; max-width: 400px; display: flex; flex-direction: column; gap: 15px; }
+        .link-card {
+            background: var(--deep-blue);
+            display: flex;
+            align-items: center;
+            padding: 12px;
+            border-radius: 15px;
+            text-decoration: none;
+            color: var(--white);
+            transition: transform 0.2s;
+            border: 1px solid rgba(197, 160, 89, 0.1);
+        }
+        .link-card:active { transform: scale(0.98); }
+        .link-thumb { width: 45px; height: 45px; border-radius: 10px; object-fit: cover; margin-right: 15px; }
+        .link-text { flex-grow: 1; font-weight: 500; font-size: 15px; }
+
+        /* Series Section */
+        .series-header { margin-top: 40px; margin-bottom: 15px; font-family: 'Playfair Display', serif; font-size: 20px; color: var(--gold); }
+        .series-box {
+            width: 100%; max-width: 400px;
+            height: 150px;
+            border-radius: 20px;
+            overflow: hidden;
+            position: relative;
+            margin-bottom: 20px;
+            cursor: pointer;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+        .series-box img { width: 100%; height: 100%; object-fit: cover; opacity: 0.6; }
+        .series-title {
+            position: absolute; bottom: 20px; left: 20px;
+            font-family: 'Playfair Display', serif; font-size: 18px; text-shadow: 2px 2px 4px rgba(0,0,0,0.8);
+        }
+
+        /* Collab Button */
+        .collab-btn {
+            margin-top: 30px;
+            background: var(--gold);
+            color: var(--navy);
+            width: 100%; max-width: 400px;
+            padding: 18px;
+            border-radius: 50px;
+            text-align: center;
+            font-weight: 700;
+            text-decoration: none;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: 0 5px 15px rgba(197, 160, 89, 0.3);
+        }
+
+        /* POPUP MODAL */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(10, 25, 47, 0.95);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            backdrop-filter: blur(8px);
+        }
+        .modal-content {
+            background: var(--deep-blue);
+            width: 85%; max-width: 350px;
+            padding: 25px;
+            border-radius: 25px;
+            border: 1px solid var(--gold);
+            position: relative;
+            animation: slideUp 0.4s ease;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+        @keyframes slideUp { from { transform: translateY(50px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+        .close-btn { position: absolute; top: 15px; right: 20px; font-size: 24px; cursor: pointer; color: var(--gold); }
+        .modal-h { font-family: 'Playfair Display', serif; margin-bottom: 15px; border-bottom: 1px solid var(--gold); padding-bottom: 10px; text-align: center; }
+        
+        .modal-list { list-style: none; }
+        .modal-item { margin-bottom: 20px; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 10px; }
+        .place-name { font-weight: 600; font-size: 15px; color: var(--white); display: block; margin-bottom: 3px; }
+        .place-addr { font-size: 12px; color: var(--slate); display: block; line-height: 1.4; }
+        .map-link { font-size: 11px; color: var(--gold); text-decoration: none; font-weight: 500; display: inline-block; margin-top: 5px; }
+    </style>
+</head>
+<body>
+
+    <div class="profile-container">
+        <img src="profile.jpg" alt="Arib" class="pfp">
+        <h1>aribfinds</h1>
+        <p class="bio">Exploring Underrated places | unique foods | Shops to visit 🛍️ | Follow to explore Kolkata differently</p>
+    </div>
+
+    <div class="links-container">
+        <a href="https://www.instagram.com/aribfinds?igsh=Z2ZjY29pc2JzNDd0" class="link-card" target="_blank">
+            <img src="insta-icon.png" class="link-thumb">
+            <span class="link-text">Instagram</span>
+        </a>
+        <a href="https://www.facebook.com/61586080052626/" class="link-card" target="_blank">
+            <img src="fb-icon.png" class="link-thumb">
+            <span class="link-text">Facebook</span>
+        </a>
+        <a href="https://www.youtube.com/@AribVlogs" class="link-card" target="_blank">
+            <img src="yt-icon.png" class="link-thumb">
+            <span class="link-text">YouTube</span>
+        </a>
+        <a href="https://wa.me/917439762618" class="link-card" target="_blank">
+            <img src="wa-icon.png" class="link-thumb">
+            <span class="link-text">WhatsApp</span>
+        </a>
+
+        <h2 class="series-header">Special Series</h2>
+
+        <div class="series-box" onclick="openModal('food')">
+            <img src="food-thumb.jpg" alt="Ramzan Food">
+            <div class="series-title">Ramzan Special Food</div>
+        </div>
+
+        <div class="series-box" onclick="openModal('shops')">
+            <img src="shop-thumb.jpg" alt="Ramzan Shops">
+            <div class="series-title">Ramzan Special Shops</div>
+        </div>
+
+        <a href="https://ig.me/m/aribfinds?text=hii%20I%20wanna%20Collab!" class="collab-btn" target="_blank">
+            DM for Collaboration
+        </a>
+    </div>
+
+    <div id="modal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeModal()">&times;</span>
+            <h2 id="modal-title" class="modal-h"></h2>
+            <div id="modal-items" class="modal-list"></div>
+        </div>
+    </div>
+
+    <script>
+        const data = {
+            food: {
+                title: "Ramzan Special Foods",
+                items: [
+                    { name: "QASIM MIYA | SEEKH KEBAB'S", addr: "Juggi Para, Rail lane, Masjid Talab, Nearby Badsha Tea In Metiabruz" },
+                    { name: "SHAHI SHEERMAL PARATHA", addr: "Metiabruz | Kachi Sadak" },
+                    { name: "AL-FIRDOUS HALEEM", addr: "Metiabruz College Opposite | High School" },
+                    { name: "Saffron Restaurant", addr: "S.A Farooqie Road | Near Begum Masjid | in Metiabruz" },
+                    { name: "Buns n Burger", addr: "Just Nearby Aqsa Fabrics | Park Circus" },
+                    { name: "Buns n Burger 2.0", addr: "Jamal Pada | In Khiderpore" }
+                ]
+            },
+            shops: {
+                title: "Ramzan Special Shops",
+                items: [
+                    { name: "SHIBRA COLLECTION'S", addr: "Ghollam Molla Lane, Nearby Barik Molla masjid in Metiabruz" },
+                    { name: "RAZA GARMENTS", addr: "Hokal lane, Near by Bichali Ghat/ Nearby Ferry Ghat In Metiabruz" },
+                    { name: "S.F COLLECTIONS", addr: "Mombay dying market | Nearby Shahi Mahal | In Metiabruz" },
+                    { name: "LORDS WEAR FASHION HUB", addr: "Fatehpur | Village Road | In Metiabruz" }
+                ]
+            }
+        };
+
+        function openModal(type) {
+            document.getElementById('modal-title').innerText = data[type].title;
+            const container = document.getElementById('modal-items');
+            container.innerHTML = "";
+            
+            data[type].items.forEach(item => {
+                const itemDiv = document.createElement('div');
+                itemDiv.className = "modal-item";
+                
+                const mapQuery = encodeURIComponent(item.name + " " + item.addr);
+                const mapUrl = `https://www.google.com/maps/search/?api=1&query=${mapQuery}`;
+
+                itemDiv.innerHTML = `
+                    <span class="place-name">✦ ${item.name}</span>
+                    <span class="place-addr">${item.addr}</span>
+                    <a href="${mapUrl}" target="_blank" class="map-link">📍 Get Directions</a>
+                `;
+                container.appendChild(itemDiv);
+            });
+            document.getElementById('modal').style.display = 'flex';
+        }
+
+        function closeModal() {
+            document.getElementById('modal').style.display = 'none';
+        }
+
+        window.onclick = function(event) {
+            if (event.target == document.getElementById('modal')) closeModal();
+        }
+    </script>
+</body>
+</html>
